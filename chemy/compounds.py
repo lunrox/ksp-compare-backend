@@ -1,7 +1,7 @@
 import logging
 
 from bson.json_util import dumps
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request
 from flask_pymongo import PyMongo
 
 
@@ -14,7 +14,7 @@ mongo = PyMongo()
 def get_compounds():
     data = request.get_json(force=True)
     LOG.debug('data: %s', data)
-    a = list(mongo.db.compounds.find({'qty': {'$in': data}}))
+    a = list(mongo.db.compounds.find({'ions': {'$all': data}}))
     return dumps(a)
 
 
