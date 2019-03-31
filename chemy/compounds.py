@@ -10,7 +10,7 @@ bp = Blueprint('compounds', __name__, url_prefix='/compounds')
 mongo = PyMongo()
 
 
-@bp.route('/', methods=('GET',))
+@bp.route('/', methods=('POST',))
 def get_compounds():
     data = request.get_json(force=True)
     LOG.debug('data: %s', data)
