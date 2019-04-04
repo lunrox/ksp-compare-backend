@@ -3,7 +3,7 @@ import os
 
 from flask import Flask
 
-from chemy.compounds import bp, mongo
+from chemy.compounds import bp, mongo, bp2
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -33,5 +33,6 @@ def create_app(test_config=None):
         mongo.init_app(app)
 
     app.register_blueprint(bp)
+    app.register_blueprint(bp2)
 
     return app

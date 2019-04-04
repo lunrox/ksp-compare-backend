@@ -3,14 +3,17 @@ import logging
 from bson.json_util import dumps
 from flask import Blueprint, request
 from flask_pymongo import PyMongo
+from flask_cors import CORS
 
 
 LOG = logging.getLogger(__name__)
-bp = Blueprint('compounds', __name__, url_prefix='/compounds')
+bp = Blueprint('compounds', __name__)
+CORS(bp)
+
 mongo = PyMongo()
 
 
-@bp.route('/', methods=('POST',))
+@bp.route('/compounds', methods=('POST',))
 def get_compounds():
     data = request.get_json(force=True)
     LOG.debug('data: %s', data)
@@ -18,7 +21,10 @@ def get_compounds():
     return dumps(a)
 
 
-@bp.route('/new_compound', methods=('POST',))
+bp2 = Blueprint('add', __name__)
+
+
+@bp2.route('/new_compound', methods=('POST',))
 def add_compound():
     data = request.get_json(force=True)
     LOG.debug('data: %s', data)
