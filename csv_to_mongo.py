@@ -9,14 +9,17 @@ docs = []
 with open('solubility_product.csv', newline='') as csvfile:
     reader = csv.reader(csvfile)
     for row in reader:
-        compound, cations, anions, dissotiation, pr, logpr, comment, color, link = row
+        compound, cations, anions, dissotiation, ksp, logpr, comment, color, link = row
+
+        cations = [x.strip() for x in cations.split(',')]
+        anions = [x.strip() for x in anions.split(',')]
         doc = {
             'name': compound,
-            'ions': cations.split(',') + anions.split(','),
+            'ions': cations + anions,
             'cations': cations,
             'anions': anions,
             'dissotiation': dissotiation,
-            'pr': pr,
+            'ksp': ksp,
             'comment': comment,
             'color': color,
         }
