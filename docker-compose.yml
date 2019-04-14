@@ -5,8 +5,8 @@ services:
     build: .
     ports:
      - "4486:5000"
-    environment:
-      FLASK_ENV: development
+#    environment:
+#      FLASK_ENV: development
   mongo:
     image: mongo
     restart: unless-stopped

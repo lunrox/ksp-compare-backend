@@ -21,10 +21,7 @@ def get_compounds():
     return dumps(a)
 
 
-bp2 = Blueprint('add', __name__)
-
-
-@bp2.route('/new_compound', methods=('POST',))
+@bp.route('/new_compound/', methods=('POST',))
 def add_compound():
     data = request.get_json(force=True)
     LOG.debug('data: %s', data)
