@@ -13,11 +13,22 @@ CORS(bp)
 mongo = PyMongo()
 
 
+@bp.route('/compounds/', methods=('POST',))
 @bp.route('/compounds', methods=('POST',))
 def get_compounds():
     data = request.get_json(force=True)
     LOG.debug('data: %s', data)
-    a = list(mongo.db.compounds.find({'ions': {'$all': data}}))
+    a = list(mongo.db.compounds.aggregate([
+        {"$match": {"ions": {"$in": data}}},
+        {"$addFields": {
+            "order": {
+                "$size": {
+                    "$setIntersection": [data, "$ions"]
+                }
+            }
+        }},
+        {"$sort": {"order": -1}}
+    ]))
     return dumps(a)
 
 
