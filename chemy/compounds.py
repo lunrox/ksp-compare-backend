@@ -2,10 +2,11 @@ import itertools
 import logging
 
 from bson.json_util import dumps
-from flask import Blueprint, request
+from flask import Blueprint, request, jsonify
 from flask_pymongo import PyMongo
 from flask_cors import CORS
 
+from chemy.exceptions import InvalidUsage
 
 LOG = logging.getLogger(__name__)
 bp = Blueprint('compounds', __name__)
@@ -24,7 +25,7 @@ def get_compounds():
     data = request.get_json(force=True)
     LOG.debug('data: %s', data)
     if not isinstance(data, list):
-        return 'Give me a list', 400
+        raise InvalidUsage('Give me a list')
 
     result = []
     for l in range(len(data), 1, -1):
@@ -41,3 +42,10 @@ def add_compound():
     LOG.debug('data: %s', data)
     mongo.db.compounds.insert_one(data)
     return '', 201
+
+
+@bp.errorhandler(InvalidUsage)
+def handle_invalid_usage(error):
+    response = jsonify(error.to_dict())
+    response.status_code = error.status_code
+    return response
