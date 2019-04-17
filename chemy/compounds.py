@@ -19,6 +19,10 @@ def get_matched_compounds(ions):
     return mongo.db.compounds.find({"ions": {"$size": len(ions), "$all": ions}})
 
 
+def get_compounds_with_ion(ion):
+    return mongo.db.compounds.find({"ions": {"$all": [ion]}})
+
+
 @bp.route('/compounds/', methods=('POST',))
 @bp.route('/compounds', methods=('POST',))
 def get_compounds():
@@ -26,6 +30,9 @@ def get_compounds():
     LOG.debug('data: %s', data)
     if not isinstance(data, list):
         raise InvalidUsage('Give me a list')
+
+    if len(data) == 1:
+        return dumps(get_compounds_with_ion(data[0]))
 
     result = []
     for l in range(len(data), 1, -1):
