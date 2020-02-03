@@ -37,4 +37,7 @@ with open('solubility_product.csv', newline='') as csvfile:
         docs.append(doc)
 
 mongodb = client['myDatabase']
+LOG.info('Cleaning collection before insert')
+mongodb.compounds.drop()
+LOG.info('Inserting data from CSV')
 mongodb.compounds.insert_many(docs)

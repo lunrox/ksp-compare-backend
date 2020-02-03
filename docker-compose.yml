@@ -1,12 +1,27 @@
-version: '3.1'
+version: '3.7'
 services:
   chemy:
     image: chemy
     build: .
-    ports:
-     - "4486:5000"
-#    environment:
-#      FLASK_ENV: development
+    volumes:
+      - socket:/shared
+    environment:
+      SOCKET_PATH: "/shared/chemy.sock"
+    depends_on:
+      - mongo
+
   mongo:
     image: mongo
     restart: unless-stopped
+
+  nginx:
+    image: ksptool-static
+    ports:
+      - 80:80
+    volumes:
+      - socket:/shared
+    depends_on:
+      - chemy
+
+volumes:
+  socket:
