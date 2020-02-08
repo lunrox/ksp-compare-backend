@@ -13,7 +13,7 @@ volume.
 ### Build and deployment
 
 1. Clone or update submodule  
-`git submodule update --remote`
+`git submodule update --init --remote`
 2. Build docker images  
 `docker-compose build`
 3. Deploy app  
