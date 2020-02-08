@@ -1,0 +1,9 @@
+.venv
+.idea
+.DS_Store
+ksp-compare-tool
+.gitignore
+.gitmodules
+docker-compose.yml
+Dockerfile
+

@@ -16,6 +16,7 @@ services:
 
   nginx:
     image: ksptool-static
+    build: ksp-compare-tool
     ports:
       - 80:80
     volumes:
