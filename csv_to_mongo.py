@@ -14,7 +14,7 @@ with open('solubility_product.csv', newline='') as csvfile:
     reader = csv.reader(csvfile)
     for i, row in enumerate(reader):
         try:
-            compound, cations, anions, dissotiation, ksp, logpr, comment, color_names, color_codes, link = row
+            compound, cations, anions, dissociation, ksp, logpr, comment, color_names, color_codes, link = row
         except ValueError:
             LOG.info('troubles with the line %s', i)
             raise
@@ -28,7 +28,7 @@ with open('solubility_product.csv', newline='') as csvfile:
             'ions': cations + anions,
             'cations': cations,
             'anions': anions,
-            'dissotiation': dissotiation,
+            'dissociation': dissociation,
             'ksp': ksp,
             'comment': comment,
             'colors': [{'name': name, 'code': code}
