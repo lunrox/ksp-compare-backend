@@ -16,7 +16,7 @@ with open('solubility_product.csv', newline='') as csvfile:
         try:
             compound, cations, anions, dissociation, ksp, logpr, comment, color_names, color_codes, link = row
         except ValueError:
-            LOG.info('troubles with the line %s', i)
+            LOG.info('troubles with the line %s', i + 1)
             raise
 
         cations = [x.strip() for x in cations.split(',')]
