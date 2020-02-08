@@ -25,8 +25,10 @@ def get_compounds_with_ion(ion):
 
 @bp.route('/compounds/', methods=('POST',))
 @bp.route('/compounds', methods=('POST',))
-def get_compounds():
-    data = request.get_json(force=True)
+def search_compounds():
+    data = request.get_json(force=True, silent=True)
+    if data is None:
+        raise InvalidUsage('Unable to parse input data')
     LOG.debug('data: %s', data)
     if not isinstance(data, list):
         raise InvalidUsage('Give me a list')
@@ -35,20 +37,12 @@ def get_compounds():
         return dumps(get_compounds_with_ion(data[0]))
 
     result = []
-    for l in range(len(data), 1, -1):
-        for subset in itertools.combinations(data, l):
+    for subset_size in range(len(data), 1, -1):
+        for subset in itertools.combinations(data, subset_size):
             result.extend(get_matched_compounds(subset))
 
     LOG.debug('result: %s', result)
     return dumps(result)
-
-
-@bp.route('/new_compound/', methods=('POST',))
-def add_compound():
-    data = request.get_json(force=True)
-    LOG.debug('data: %s', data)
-    mongo.db.compounds.insert_one(data)
-    return '', 201
 
 
 @bp.errorhandler(InvalidUsage)
