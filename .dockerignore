@@ -6,4 +6,5 @@ ksp-compare-tool
 .gitmodules
 docker-compose.yml
 Dockerfile
+chemy-tests
 
