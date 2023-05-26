@@ -1,4 +1,4 @@
 [submodule "ksp-compare-tool"]
 	path = ksp-compare-tool
-	url = ssh://git@git.jetbrains.space/rocode/ksp-compare-tool.git
+	url = ssh://git@github.com:shaste/ksp-compare-tool.git
 	branch = master
